@@ -1,0 +1,14 @@
+
+{
+  "development": {
+    "database":"paleblue-api-development",
+    "host":"localhost"
+  },
+  "test": {
+    "database": "paleblue-api-test",
+    "host": "localhost"
+  },
+  "production": {
+    "use_env_variable": "MONGODB_URI"
+  }
+}
