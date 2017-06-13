@@ -5,15 +5,19 @@ process.env.NODE_ENV = 'test';
 
 beforeEach((done) => {
   if (mongoose.connection.readyState) {
-    done();
+    cleanDb(done);
   } else {
     require('./../../../mongo')()
-      .then(() => done());
+      .then(() => cleanDb(done));
   }
 });
 
-afterEach((done) => {
-  require('./../../../clearTestDb')()
-    .then(() => done())
-    .catch((e) => console.error(e.stack));
-});
+
+
+const cleanDb = (done) => {
+  require('./../../../clearDb')()
+  .then(() => {
+  	done();
+  })
+  .catch((e) => console.error(e.stack))	
+}

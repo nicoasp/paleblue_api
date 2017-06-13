@@ -43,9 +43,23 @@ describe('Create a instance of', () => {
     })
   })
 
-  describe("User", () => {
+  describe("Content", () => {
+
+    let user;
+    beforeEach((done) => {
+      const user = new User();
+      user.email = 'foo@bar.com';
+      user.password = 'hhhhssss11';
+      user.save((err, savedUser) => {
+        user = savedUser;
+        done();
+      })
+    });
+
     it('should save to the database', done => {
+      console.log("user", user);
       const content = new Content();
+      content.userId = user._id;
       content.contentType = 'image';
       content.data = "https://i0.wp.com/st.gdefon.ru/wallpapers_original/wallpapers/393789_tigry_art_planeta_zemlya_1680x1050_(www.GdeFon.ru).jpg";
       content.lng = -71.2760;
