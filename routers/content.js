@@ -16,6 +16,7 @@ const Content = models.Content;
 // })
 
 router.post('/', (req, res) => {
+  console.log("hit route")
 	const { contentType, data, lng, lat, userId } = req.body;
 
   const content = new Content();
