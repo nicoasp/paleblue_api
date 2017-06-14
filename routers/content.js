@@ -16,9 +16,10 @@ router.get('/', (req, res) => {
 })
 
 router.post('/', (req, res) => {
-	const { contentType, data, lng, lat } = req.body;
+	const { contentType, data, lng, lat, userId } = req.body;
 
   const content = new Content();
+  content.userId = userId;
   content.contentType = contentType;
   content.data = data;
   content.lng = lng;
@@ -26,13 +27,13 @@ router.post('/', (req, res) => {
   content.save((err, content) => {
   	if (err) {
   		res.json({
-  			success: false,
-  			error: err
+  			error: err,
+        content: null
   		})
   	} else {
   		res.json({
-  			success: true,
-  			error: null
+  			error: null,
+        content: content
   		})  		
   	}
   })
