@@ -23,6 +23,8 @@
     "url": "^0.11.0"
   },
   "scripts": {
-    "test-db": "jasmine-node spec/ --verbose --captureExceptions --forceexit"
+    "test-db": "jasmine-node spec/ --verbose --captureExceptions --forceexit",
+    "seed": "node seeds",
+    "start": "node index"
   }
 }
