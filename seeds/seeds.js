@@ -17,9 +17,9 @@ module.exports = () => {
   // ----------------------------------------
   // Hotels
   // ----------------------------------------
-  console.log('Creating Hotels');
+  console.log('Creating Dots');
   var contents = [];
- 
+
   var content1 = new Content({
     userId: users[1]._id,
     contentType: "image",
