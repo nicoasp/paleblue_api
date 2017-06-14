@@ -158,7 +158,7 @@ describe("App", () => {
           }
         },
         (err, res, body) => {
-          expect(res.error).toBe("User not found");
+          expect(res.statusCode).toBe(401);
           done();
         }
       );

@@ -50,7 +50,7 @@ if (process.env.NODE_ENV !== "test") {
 app.use((err, req, res, next) => {
   if (err) {
     console.log(err);
-    return res.status(400).json(err);
+    return res.status(err.status).json({ error: err.error });
   }
 });
 
