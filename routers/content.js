@@ -5,16 +5,15 @@ const mongoose = require("mongoose");
 const models = require("../models");
 const Content = models.Content;
 
-router.get("/", (req, res) => {
-  Content.find({})
-    .then(contentList => {
-      res.json(contentList);
-    })
-    .catch(err => {
-      console.log(err);
-      next({ status: 404, error: "Content does not exist" });
-    });
-});
+// router.get('/', (req, res) => {
+//    Content.find({})
+// 	   .then((contentList) => {
+// 	   	res.json(contentList);
+// 	   })
+// 	   .catch((err) => {
+// 	   	console.log(error);
+// 	   })
+// })
 
 router.post('/', (req, res) => {
 	const { contentType, data, lng, lat, userId } = req.body;
@@ -32,7 +31,7 @@ router.post('/', (req, res) => {
   		res.json({
   			error: null,
         content: content
-  		})  		
+  		})
   	}
   })
 })
