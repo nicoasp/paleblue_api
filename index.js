@@ -62,8 +62,27 @@ args.push(() => {
   console.log(`Listening: http://${host}:${port}\n`);
 });
 
+const server = require('http').createServer(app);
 if (require.main === module) {
-  app.listen.apply(app, args);
+  server.listen.apply(app, args);
 }
 
 module.exports = app;
+
+////
+// Websockets
+////
+const io = require('socket.io')(server);  
+
+io.on('connection', (socket) => {  
+  console.log('a user connected');
+
+  socket.on('disconnect', () => {
+    console.log('user disconnected');
+  });
+}
+
+
+
+
+
