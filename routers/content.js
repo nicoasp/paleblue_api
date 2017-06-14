@@ -16,10 +16,11 @@ router.get("/", (req, res) => {
     });
 });
 
-router.post("/", (req, res) => {
-  const { contentType, data, lng, lat } = req.body;
+router.post('/', (req, res) => {
+	const { contentType, data, lng, lat, userId } = req.body;
 
   const content = new Content();
+  content.userId = userId;
   content.contentType = contentType;
   content.data = data;
   content.lng = lng;
@@ -27,13 +28,13 @@ router.post("/", (req, res) => {
   content.save((err, content) => {
     if (err) {
       next({ status: 400, error: "Submitted content is not valid" });
-    } else {
-      res.json({
-        success: true,
-        error: null
-      });
-    }
-  });
-});
+  	} else {
+  		res.json({
+  			error: null,
+        content: content
+  		})  		
+  	}
+  })
+})
 
 module.exports = router;

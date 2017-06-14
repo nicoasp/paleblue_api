@@ -57,8 +57,11 @@ app.use((err, req, res, next) => {
 ////
 // Server
 ////
-const port = process.env.PORT || process.argv[2] || 3000;
-const host = "localhost";
+const port = process.env.PORT ||
+  process.argv[2] ||
+  3001;
+const host = 'localhost';
+
 
 let args;
 process.env.NODE_ENV === "production" ? (args = [port]) : (args = [port, host]);
