@@ -35,6 +35,7 @@ app.use(auth);
 ////
 // Morgan Logging
 ////
+const morgan = require("morgan");
 if (process.env.NODE_ENV !== "test") {
   app.use(morgan("tiny"));
 }
