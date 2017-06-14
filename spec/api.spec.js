@@ -104,7 +104,7 @@ describe("App", () => {
       );
     });
 
-    it("creates new image content", done => {
+    xit("creates new image content", done => {
       var options = {
         url: `${apiUrl}content`,
         method: "POST",
@@ -158,7 +158,8 @@ describe("App", () => {
           }
         },
         (err, res, body) => {
-          console.log(err);
+          expect(res.error).toBe("User not found");
+          done();
         }
       );
     });

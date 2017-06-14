@@ -47,8 +47,12 @@ if (process.env.NODE_ENV !== "test") {
 ////
 // Error Handling
 ////
-const handleError = require("./lib/handleError")();
-app.use(handleError);
+app.use((err, req, res, next) => {
+  if (err) {
+    console.log(err);
+    return res.status(400).json(err);
+  }
+});
 
 ////
 // Server
