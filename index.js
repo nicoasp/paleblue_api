@@ -43,6 +43,8 @@ if (process.env.NODE_ENV !== "test") {
 ////
 // Routes
 ////
+const contentRouter = require('./routers/content');
+app.use('/content', contentRouter);
 
 ////
 // Error Handling
@@ -57,21 +59,41 @@ app.use((err, req, res, next) => {
 ////
 // Server
 ////
-const port = process.env.PORT ||
-  process.argv[2] ||
-  3001;
-const host = 'localhost';
+// THE FOLLOWING CODE UNTIL THE SERVER IS COMMENTED OUT BECAUSE IT DOESNT WORK WITH WEBSOCKETS
+// const port = process.env.PORT ||
+//   process.argv[2] ||
+//   3001;
+// const host = 'localhost';
 
 
-let args;
-process.env.NODE_ENV === "production" ? (args = [port]) : (args = [port, host]);
+// let args;
+// process.env.NODE_ENV === "production" ? (args = [port]) : (args = [port, host]);
 
-args.push(() => {
-  console.log(`Listening: http://${host}:${port}\n`);
-});
+// args.push(() => {
+//   console.log(`Listening: http://${host}:${port}\n`);
+// });
 
-if (require.main === module) {
-  app.listen.apply(app, args);
-}
+const server = require('http').createServer(app);
+// if (require.main === module) {
+  server.listen(3001);
+// }
 
 module.exports = app;
+
+////
+// Websockets
+////
+const io = require('socket.io')(server);  
+
+io.on('connection', (socket) => {  
+  console.log('a user connected');
+
+  socket.on('disconnect', () => {
+    console.log('user disconnected');
+  });
+});
+
+
+
+
+
