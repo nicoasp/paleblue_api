@@ -9,7 +9,7 @@ const models = require("./models");
 const User = models.User;
 app.use((req, res, next) => {
   if (mongoose.connection.readyState) {
-    console.log('already connected to MongoDB');
+    console.log("connected to MongoDB");
     next();
   } else {
     require("./mongo")(req).then(() => {
@@ -43,8 +43,12 @@ if (process.env.NODE_ENV !== "test") {
 ////
 // Routes
 ////
-const contentRoutes = require('./routers/content');
-app.use('/api/v1/content', contentRoutes);
+
+////
+// Error Handling
+////
+const handleError = require("./lib/handleError")();
+app.use(handleError);
 
 ////
 // Server
