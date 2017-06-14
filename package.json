@@ -25,6 +25,6 @@
   "scripts": {
     "test-db": "jasmine-node spec/ --verbose --captureExceptions --forceexit",
     "seed": "node seeds",
-    "start": "node index"
+    "start": "nodemon index"
   }
 }
