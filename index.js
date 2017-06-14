@@ -44,7 +44,7 @@ if (process.env.NODE_ENV !== "test") {
 // Routes
 ////
 const contentRouter = require('./routers/content');
-app.use('/content', contentRouter);
+app.use('/api/v1/content', contentRouter);
 
 ////
 // Error Handling
