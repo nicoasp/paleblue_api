@@ -59,7 +59,7 @@ app.use((err, req, res, next) => {
 ////
 // Server
 ////
-// THE FOLLOWING CODE UNTIL THE SERVER IS COMMENTED OUT BECAUSE IT DOESNT WORK WITH WEBSOCKETS
+// THE FOLLOWING CODE UNTIL THE SERVER IS COMMENTED OUT BECAUSE I'M NOT SURE WHAT IT'S FOR AND IT GIVES PROBLEMS WITH WEBSOCKETS
 // const port = process.env.PORT ||
 //   process.argv[2] ||
 //   3001;
@@ -91,6 +91,10 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => {
     console.log('user disconnected');
   });
+
+  socket.on('created content', (content) => {
+    io.emit('new content', content);
+  })
 });
 
 
