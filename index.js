@@ -45,6 +45,12 @@ if (process.env.NODE_ENV !== "test") {
 ////
 
 ////
+// Error Handling
+////
+const handleError = require("./lib/handleError");
+app.use(handleError);
+
+////
 // Server
 ////
 const port = process.env.PORT || process.argv[2] || 3000;
