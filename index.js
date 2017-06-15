@@ -49,6 +49,9 @@ if (process.env.NODE_ENV !== "test") {
 const contentRouter = require('./routers/content');
 app.use('/api/v1/content', contentRouter);
 
+const likeRouter = require('./routers/like');
+app.use('/api/v1/like', likeRouter);
+
 ////
 // Error Handling
 ////
