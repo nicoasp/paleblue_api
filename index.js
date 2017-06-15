@@ -60,10 +60,10 @@ app.use((err, req, res, next) => {
 // Server
 ////
 // THE FOLLOWING CODE UNTIL THE SERVER IS COMMENTED OUT BECAUSE I'M NOT SURE WHAT IT'S FOR AND IT GIVES PROBLEMS WITH WEBSOCKETS
-// const port = process.env.PORT ||
-//   process.argv[2] ||
-//   3001;
-// const host = 'localhost';
+const port = process.env.PORT ||
+  process.argv[2] ||
+  3001;
+const host = 'localhost';
 
 
 // let args;
@@ -75,7 +75,7 @@ app.use((err, req, res, next) => {
 
 const server = require('http').createServer(app);
 // if (require.main === module) {
-  server.listen(3001);
+  server.listen(port);
 // }
 
 module.exports = app;
