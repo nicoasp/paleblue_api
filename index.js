@@ -1,5 +1,8 @@
 const app = require("express")();
+var cors = require('cors')
 require("dotenv").config();
+
+app.use(cors());
 
 ////
 // MongoDB connection
@@ -60,9 +63,7 @@ app.use((err, req, res, next) => {
 // Server
 ////
 // THE FOLLOWING CODE UNTIL THE SERVER IS COMMENTED OUT BECAUSE I'M NOT SURE WHAT IT'S FOR AND IT GIVES PROBLEMS WITH WEBSOCKETS
-// const port = process.env.PORT ||
-//   process.argv[2] ||
-//   3001;
+const port = process.env.PORT || 3001;
 // const host = 'localhost';
 
 
@@ -74,9 +75,9 @@ app.use((err, req, res, next) => {
 // });
 
 const server = require('http').createServer(app);
-// if (require.main === module) {
-  server.listen(3001);
-// }
+if (require.main === module) {
+  server.listen(port);
+}
 
 module.exports = app;
 
