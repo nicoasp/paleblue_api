@@ -1,6 +1,8 @@
 const app = require("express")();
 require("dotenv").config();
 
+console.log("From index")
+
 ////
 // MongoDB connection
 ////
