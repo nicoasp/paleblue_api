@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema
 const mongooseuniquevalidator = require('mongoose-unique-validator');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt-nodejs');
 
 let UserSchema = new Schema({
   email: {type: String, isEmail: true, unique: true},
@@ -13,7 +13,7 @@ UserSchema.methods.validatePassword = function(password) {
 };
 
 UserSchema.virtual('password').set(function(value) {
-    this.passwordHash = bcrypt.hashSync(value, 8);
+    this.passwordHash = bcrypt.hashSync(value);
 });
 
 UserSchema.plugin(mongooseuniquevalidator);

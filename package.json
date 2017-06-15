@@ -5,7 +5,7 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "bcrypt": "^1.0.2",
+    "bcrypt-nodejs": "0.0.3",
     "bluebird": "^3.5.0",
     "body-parser": "^1.17.2",
     "dotenv": "^4.0.0",
@@ -26,6 +26,6 @@
   "scripts": {
     "test-db": "jasmine-node spec/ --verbose --captureExceptions --forceexit",
     "seed": "node seeds",
-    "start": "node index"
+    "start": "nodemon index"
   }
 }

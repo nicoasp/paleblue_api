@@ -2,14 +2,14 @@ const mongoose = require("mongoose");
 const models = require("../models");
 const User = models.User;
 const Content = models.Content;
-var bcrypt = require("bcrypt");
+var bcrypt = require("bcrypt-nodejs");
 
 describe("Create a instance of", () => {
   describe("User", () => {
     it("should save to the database", done => {
       const user = new User();
       let pass = "hhhhssss11";
-      let passHash = bcrypt.hashSync(pass, 8);
+      let passHash = bcrypt.hashSync(pass);
       let passCheck;
       user.email = "foo@bar.com";
       user.password = pass;

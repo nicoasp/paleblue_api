@@ -1,7 +1,6 @@
 const app = require("express")();
 require("dotenv").config();
 
-console.log("From index")
 
 ////
 // MongoDB connection
@@ -74,9 +73,9 @@ const port = process.env.PORT || 3001;
 // });
 
 const server = require('http').createServer(app);
-// if (require.main === module) {
+if (require.main === module) {
   server.listen(port);
-// }
+}
 
 module.exports = app;
 
