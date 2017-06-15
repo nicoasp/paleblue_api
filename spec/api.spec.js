@@ -1,8 +1,8 @@
 const app = require("../index");
 const models = require("../models");
 const User = models.User;
-
 const Content = models.Content;
+const Like = models.Like;
 const request = require("request");
 
 describe("App", () => {
@@ -104,7 +104,7 @@ describe("App", () => {
       );
     });
 
-    xit("creates new image content", done => {
+    it("creates new image content", done => {
       var options = {
         url: `${apiUrl}content`,
         method: "POST",
@@ -127,6 +127,74 @@ describe("App", () => {
           expect(content.lng).toBe(-71.276);
           done();
         });
+      });
+    });
+  });
+
+  describe("Like", () => {
+    let token;
+    let content;
+    beforeEach(done => {
+      request.post(
+        {
+          url: `${apiUrl}login`,
+          form: {
+            email: "foobar@gmail.com",
+            password: "password"
+          }
+        },
+        (err, res, body) => {
+          token = JSON.parse(body).token;
+          var options = {
+            url: `${apiUrl}content`,
+            method: "POST",
+            headers: {
+              Authorization: `JWT ${token}`
+            },
+            form: {
+              contentType: "image",
+              data:
+                "https://i0.wp.com/st.gdefon.ru/wallpapers_original/wallpapers/393789_tigry_art_planeta_zemlya_1680x1050_(www.GdeFon.ru).jpg",
+              lng: "-71.2760",
+              lat: "42.4906"
+            }
+          };
+          request(options, (err, res, body) => {
+            Content.findOne({}).then(savedContent => {
+              if (err) {
+                console.log("error is...", err);
+              }
+              content = savedContent;
+              done();
+            });
+          });
+        }
+      );
+    });
+
+    it("creates new like", done => {
+      var options = {
+        url: `${apiUrl}like`,
+        method: "POST",
+        headers: {
+          Authorization: `JWT ${token}`
+        },
+        form: {
+          fromUserId: user._id.toString(),
+          contentId: content._id.toString(),
+          fromLng: -71.276,
+          fromLat: 42.4906,
+        }
+      };
+      request(options, (err, res, body) => {
+        Like.findOne({}, (err, like) => {
+          if (err) {
+            console.log("error is...", err);
+          }
+          expect(like.fromLng).toBe(-71.276);
+          done();          
+        })
+
       });
     });
   });

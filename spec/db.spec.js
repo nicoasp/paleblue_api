@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const models = require("../models");
 const User = models.User;
 const Content = models.Content;
+const Like = models.Like;
 var bcrypt = require("bcrypt-nodejs");
 
 describe("Create a instance of", () => {
@@ -55,7 +56,6 @@ describe("Create a instance of", () => {
     });
 
     it("should save to the database", done => {
-      console.log("user", user);
       const content = new Content();
       content.userId = user._id;
       content.contentType = "image";
@@ -71,6 +71,47 @@ describe("Create a instance of", () => {
           done();
         });
       });
+    });
+  });
+
+  describe("Like", () => {
+    let user;
+    let content;
+    beforeEach(done => {
+      user = new User();
+      user.email = "foo@bar.com";
+      user.password = "hhhhssss11";
+      user.save((err, savedUser) => {
+        user = savedUser;
+        content = new Content();
+        content.userId = user._id;
+        content.contentType = "image";
+        content.data =
+          "https://i0.wp.com/st.gdefon.ru/wallpapers_original/wallpapers/393789_tigry_art_planeta_zemlya_1680x1050_(www.GdeFon.ru).jpg";
+        content.lng = -71.276;
+        content.lat = 42.4906;
+        content.save((err, savedContent) => {
+          content = savedContent;
+          done();
+        });        
+      });
+    });
+
+    it("should save to the database", done => {
+      console.log("start it");
+      const like = new Like();
+      like.fromUserId = user._id;
+      like.contentId = content._id;
+      like.fromLng = -71.276;
+      like.fromLat = 42.4906;
+      like.save((err, like) => {
+        expect(err).toBeNull();
+        Like.find({}, (err, result) => {
+          expect(result.length).toBe(1);
+          expect(result[0].fromLat).toBe(42.4906);
+          done();
+        });
+      })
     });
   });
 });
