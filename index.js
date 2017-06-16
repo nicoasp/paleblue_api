@@ -99,6 +99,10 @@ io.on('connection', (socket) => {
   socket.on('created content', (content) => {
     io.emit('new content', content);
   })
+
+  socket.on('created like', (like) => {
+    io.emit('new like', like);
+  })
 });
 
 
