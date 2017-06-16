@@ -8,7 +8,8 @@ module.exports = () => {
   for (let i = 0; i < 10; i++) {
     var user = new User({
       email: `foobar${ i }@gmail.com`,
-      password: 'password'
+      password: 'password',
+      lastActive: new Date(Date.now() - 1000000)
     });
     users.push(user);
   }
