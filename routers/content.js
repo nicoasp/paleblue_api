@@ -6,7 +6,7 @@ const models = require("../models");
 const Content = models.Content;
 
 
-router.post('/', (req, res) => {
+router.post('/', (req, res, next) => {
 	const { contentType, data, lng, lat, userId } = req.body;
 
   const content = new Content();

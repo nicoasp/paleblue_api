@@ -29,7 +29,7 @@ ROUTE
 REDUX
 
 Likes: [
-	{ fromUserId, fromLng, fromLat, createdAt},
+	{ contentId, fromUserId, fromLng, fromLat, createdAt},
 ]
 
 Animation flow:

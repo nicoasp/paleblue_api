@@ -6,6 +6,7 @@ const bcrypt = require('bcrypt-nodejs');
 let UserSchema = new Schema({
   email: {type: String, isEmail: true, unique: true},
   passwordHash: {type: String},
+  lastActive: { type: Date, default: Date.now }
 });
 
 UserSchema.methods.validatePassword = function(password) {
