@@ -145,29 +145,17 @@ describe("App", () => {
         },
         (err, res, body) => {
           token = JSON.parse(body).token;
-          var options = {
-            url: `${apiUrl}content`,
-            method: "POST",
-            headers: {
-              Authorization: `JWT ${token}`
-            },
-            form: {
-              contentType: "image",
-              data:
-                "https://i0.wp.com/st.gdefon.ru/wallpapers_original/wallpapers/393789_tigry_art_planeta_zemlya_1680x1050_(www.GdeFon.ru).jpg",
-              lng: "-71.2760",
-              lat: "42.4906"
-            }
-          };
-          request(options, (err, res, body) => {
-            Content.findOne({}).then(savedContent => {
-              if (err) {
-                console.log("error is...", err);
-              }
-              content = savedContent;
-              done();
-            });
-          });
+          cont = new Content();
+          cont.userId = user._id;
+          cont.contentType = "image";
+          cont.data =
+            "https://i0.wp.com/st.gdefon.ru/wallpapers_original/wallpapers/393789_tigry_art_planeta_zemlya_1680x1050_(www.GdeFon.ru).jpg";
+          cont.lng = -71.276;
+          cont.lat = 42.4906;
+          cont.save((err, savedContent) => {
+            content = savedContent;
+            done();
+          })
         }
       );
     });
@@ -197,6 +185,78 @@ describe("App", () => {
 
       });
     });
+
+    describe("getting likes", () => {
+      let newLike;
+      let oldLike;
+      let likeFromUser2;
+      let user2;
+      let content2;
+      beforeEach(done => {
+        User.create({
+          email: "foobar2@gmail.com",
+          password: "password"
+        }).then(result => {
+          user2 = result;
+          Content.create({
+            contentType: "image",
+            data:
+              "https://i0.wp.com/st.gdefon.ru/wallpapers_original/wallpapers/393789_tigry_art_planeta_zemlya_1680x1050_(www.GdeFon.ru).jpg",
+            lng: "-71.2760",
+            lat: "42.4906",
+            userId: user2._id
+          }).then(result => {
+            content2 = result;
+            Like.create({
+              fromUserId: user._id.toString(),
+              contentId: content._id.toString(),
+              fromLng: -71.276,
+              fromLat: 42.4906,
+            })
+            .then(result => {
+              newike = result;
+              Like.create({
+                fromUserId: user._id.toString(),
+                contentId: content._id.toString(),
+                fromLng: 34.276,
+                fromLat: 21.4906,
+                createdAt: new Date(Date.now() - 36000000)
+              })
+              .then(result2 => {
+                oldLike = result2;
+                Like.create({
+                  fromUserId: user2._id.toString(),
+                  contentId: content2._id.toString(),
+                  fromLng: 34.276,
+                  fromLat: 21.4906,
+                })
+                .then(result3 => {
+                  likeFromUser2 = result3;
+                  done();
+                })              
+              })
+            }); 
+          })         
+        });
+      });
+
+      it("gets likes from the right user and time", done => {
+        var options = {
+          url: `${apiUrl}like`,
+          method: "GET",
+          headers: {
+            Authorization: `JWT ${token}`
+          }
+        };
+        request(options, (err, res, body) => {
+          let likes = JSON.parse(body);
+          expect(likes.length).toBe(1);
+          expect(likes[0].fromLat).toBe(42.4906);
+          done()
+        });
+      })     
+    })
+
   });
 
   describe("error handling", () => {

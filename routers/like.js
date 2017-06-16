@@ -6,15 +6,37 @@ const models = require("../models");
 const Like = models.Like;
 
 
-// router.get('/', (req, res) => {
-//    Like.find({})
-// 	   .then((likeList) => {
-// 	   	res.json(contentList);
-// 	   })
-// 	   .catch((err) => {
-// 	   	console.log(error);
-// 	   })
-// })
+router.get('/', (req, res) => {
+  Like.find({})
+    .populate({
+        path: 'contentId', 
+        populate: { path: 'userId' }
+    })
+    .then((likeList) => {
+      return likeList.filter((like) => {
+        return (like.contentId.userId.email == req.user.email 
+          && like.contentId.userId.lastActive < like.createdAt)
+      })
+    })
+    .then((filteredList) => {
+      return filteredList.map((like) => {
+        return {
+          _id: like._id,
+          contentId: like.contentId._id,
+          fromUserId: like.fromUserId,
+          fromLng: like.fromLng,
+          fromLat: like.fromLat,
+          createdAt: like.createdAt
+        }
+      })
+    })
+    .then((finalList) => {
+      res.json(finalList);
+    })
+    .catch((err) => {
+     	console.log(err);
+    })
+})
 
 router.post('/', (req, res) => {
 	const { fromUserId, fromLng, fromLat, contentId } = req.body;
