@@ -15,7 +15,7 @@ module.exports = () => {
 
 
   // ----------------------------------------
-  // Hotels
+  // Content
   // ----------------------------------------
   console.log('Creating Dots');
   var contents = [];
@@ -65,6 +65,33 @@ module.exports = () => {
     })
   );
 
+  // ----------------------------------------
+  // Like
+  // ----------------------------------------
+  console.log('Creating Likes');
+  var likes = [];
+
+  likes.push(
+    new Like({
+      fromUserId: users[1]._id,
+      contentId: contents[2]._id,
+      fromLng: -84.3880,
+      fromLat: 33.7490
+    }),
+    new Like({
+      fromUserId: users[2]._id,
+      contentId: contents[0]._id,
+      fromLng: -31.2760,
+      fromLat: 62.4906
+    }),
+    new Like({
+      fromUserId: users[3]._id,
+      contentId: contents[1]._id,
+      fromLng: 14.2760,
+      fromLat: 22.4906
+    })
+  );
+
 
   // ----------------------------------------
   // Finish
@@ -73,7 +100,8 @@ module.exports = () => {
   var promises = [];
   [
     users,
-    contents
+    contents,
+    likes
   ].forEach((collection) => {
     collection.forEach((model) => {
       promises.push(model.save());
