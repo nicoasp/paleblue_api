@@ -74,19 +74,19 @@ module.exports = () => {
   likes.push(
     new Like({
       fromUserId: users[1]._id,
-      contentId: contents[2]._id,
+      contentId: contents[3]._id,
       fromLng: -84.3880,
       fromLat: 33.7490
     }),
     new Like({
       fromUserId: users[2]._id,
-      contentId: contents[0]._id,
+      contentId: contents[3]._id,
       fromLng: -31.2760,
       fromLat: 62.4906
     }),
     new Like({
-      fromUserId: users[3]._id,
-      contentId: contents[1]._id,
+      fromUserId: users[5]._id,
+      contentId: contents[3]._id,
       fromLng: 14.2760,
       fromLat: 22.4906
     })

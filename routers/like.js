@@ -26,6 +26,8 @@ router.get('/', (req, res) => {
           fromUserId: like.fromUserId,
           fromLng: like.fromLng,
           fromLat: like.fromLat,
+          toLng: like.contentId.lng,
+          toLat: like.contentId.lat,
           createdAt: like.createdAt
         }
       })
