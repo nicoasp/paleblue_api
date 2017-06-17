@@ -188,16 +188,16 @@ describe("App", () => {
           .then(result => {
             contentFromUser2 = result;
             Like.create({
-              fromUserId: user2._id.toString(),
-              contentId: content._id.toString(),
+              fromUserId: user2._id,
+              contentId: content._id,
               fromLng: -71.276,
               fromLat: 42.4906,
             })
             .then(result => {
               newLike = result;
               Like.create({
-                fromUserId: user2._id.toString(),
-                contentId: content._id.toString(),
+                fromUserId: user2._id,
+                contentId: content._id,
                 fromLng: 34.276,
                 fromLat: 21.4906,
                 createdAt: new Date(Date.now() - 36000000)
@@ -205,8 +205,8 @@ describe("App", () => {
               .then(result => {
                 oldLike = result;
                 Like.create({
-                  fromUserId: user._id.toString(),
-                  contentId: contentFromUser2._id.toString(),
+                  fromUserId: user._id,
+                  contentId: contentFromUser2._id,
                   fromLng: 34.276,
                   fromLat: 21.4906,
                 })
@@ -221,6 +221,7 @@ describe("App", () => {
       });
 
       it("gets likes from the right user and time", done => {
+        // Only one of the 3 likes created should match
         var options = {
           url: `${apiUrl}like`,
           method: "GET",
@@ -240,22 +241,7 @@ describe("App", () => {
   });
 
   describe("error handling", () => {
-    let token;
-    beforeEach(done => {
-      request.post(
-        {
-          url: `${apiUrl}register`,
-          form: {
-            email: "foobar11@gmail.com",
-            password: "password"
-          }
-        },
-        (err, res, body) => {
-          token = JSON.parse(body).token;
-          done();
-        }
-      );
-    });
+
     it("returns an error when incorrect login info is provided", done => {
       request.post(
         {
