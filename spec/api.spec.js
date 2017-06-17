@@ -17,8 +17,9 @@ describe("App", () => {
       User.create({
         email: "foobar@gmail.com",
         password: "password"
-      }).then(result => {
-        user = result;
+      })
+      .then(savedUser => {
+        user = savedUser;
         request.post(
           {
             url: `${apiUrl}login`,
@@ -117,9 +118,6 @@ describe("App", () => {
       };
       request(options, (err, res, body) => {
         Content.findOne({}).then(content => {
-          if (err) {
-            console.log("error is...", err);
-          }
           expect(content.lng).toBe(-71.276);
           done();
         });
@@ -160,11 +158,8 @@ describe("App", () => {
       };
       request(options, (err, res, body) => {
         Like.findOne({}, (err, like) => {
-          if (err) {
-            console.log("error is...", err);
-          }
           expect(like.fromLng).toBe(-71.276);
-          done();          
+          done();
         })
 
       });
@@ -173,49 +168,50 @@ describe("App", () => {
     describe("getting likes", () => {
       let newLike;
       let oldLike;
-      let likeFromUser2;
       let user2;
-      let content2;
+      let contentFromUser2;
+      let likeToUser2;
       beforeEach(done => {
         User.create({
           email: "foobar2@gmail.com",
           password: "password"
-        }).then(result => {
+        })
+        .then(result => {
           user2 = result;
           Content.create({
             contentType: "image",
-            data:
-              "https://i0.wp.com/st.gdefon.ru/wallpapers_original/wallpapers/393789_tigry_art_planeta_zemlya_1680x1050_(www.GdeFon.ru).jpg",
+            data: "https://tinyurl.com/ycjh83v5",
             lng: "-71.2760",
             lat: "42.4906",
             userId: user2._id
-          }).then(result => {
-            content2 = result;
+          })
+          .then(result => {
+            contentFromUser2 = result;
             Like.create({
-              fromUserId: user._id.toString(),
+              fromUserId: user2._id.toString(),
               contentId: content._id.toString(),
               fromLng: -71.276,
               fromLat: 42.4906,
             })
             .then(result => {
-              newike = result;
+              newLike = result;
               Like.create({
-                fromUserId: user._id.toString(),
+                fromUserId: user2._id.toString(),
                 contentId: content._id.toString(),
                 fromLng: 34.276,
                 fromLat: 21.4906,
                 createdAt: new Date(Date.now() - 36000000)
               })
-              .then(result2 => {
-                oldLike = result2;
+              .then(result => {
+                oldLike = result;
                 Like.create({
-                  fromUserId: user2._id.toString(),
-                  contentId: content2._id.toString(),
+                  fromUserId: user._id.toString(),
+                  contentId: contentFromUser2._id.toString(),
                   fromLng: 34.276,
                   fromLat: 21.4906,
                 })
-                .then(result3 => {
-                  likeFromUser2 = result3;
+                .then(result => {
+                  likeToUser2 = result;
                   done();
                 })              
               })

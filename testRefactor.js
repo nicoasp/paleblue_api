@@ -7,10 +7,7 @@ describe App {
 	- Post to login
 
 	describe Content {
-		beforeEach {
-			login to get token
-		}
-
+		
 		- Post to content
 	}
 
