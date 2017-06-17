@@ -10,6 +10,7 @@ describe("App", () => {
   const apiUrl = baseUrl + "/api/v1/";
   let server;
   let user;
+  let token;
 
   beforeEach(done => {
     server = app.listen(8888, () => {
@@ -18,7 +19,19 @@ describe("App", () => {
         password: "password"
       }).then(result => {
         user = result;
-        done();
+        request.post(
+          {
+            url: `${apiUrl}login`,
+            form: {
+              email: "foobar@gmail.com",
+              password: "password"
+            }
+          },
+          (err, res, body) => {
+            token = JSON.parse(body).token;
+            done();
+          }
+        );
       });
     });
   });
@@ -35,7 +48,7 @@ describe("App", () => {
   };
 
   describe("authorization routes", () => {
-    it("registers creates user if they dont exist", done => {
+    it("registers user if they dont exist", done => {
       request.post(
         {
           url: `${apiUrl}register`,
@@ -87,22 +100,6 @@ describe("App", () => {
   });
 
   describe("Content", () => {
-    let token;
-    beforeEach(done => {
-      request.post(
-        {
-          url: `${apiUrl}login`,
-          form: {
-            email: "foobar@gmail.com",
-            password: "password"
-          }
-        },
-        (err, res, body) => {
-          token = JSON.parse(body).token;
-          done();
-        }
-      );
-    });
 
     it("creates new image content", done => {
       var options = {
@@ -113,8 +110,7 @@ describe("App", () => {
         },
         form: {
           contentType: "image",
-          data:
-            "https://i0.wp.com/st.gdefon.ru/wallpapers_original/wallpapers/393789_tigry_art_planeta_zemlya_1680x1050_(www.GdeFon.ru).jpg",
+          data: "https://tinyurl.com/ycjh83v5",
           lng: "-71.2760",
           lat: "42.4906"
         }
@@ -132,36 +128,24 @@ describe("App", () => {
   });
 
   describe("Like", () => {
-    let token;
     let content;
+
     beforeEach(done => {
-      request.post(
-        {
-          url: `${apiUrl}login`,
-          form: {
-            email: "foobar@gmail.com",
-            password: "password"
-          }
-        },
-        (err, res, body) => {
-          token = JSON.parse(body).token;
-          cont = new Content();
-          cont.userId = user._id;
-          cont.contentType = "image";
-          cont.data =
-            "https://i0.wp.com/st.gdefon.ru/wallpapers_original/wallpapers/393789_tigry_art_planeta_zemlya_1680x1050_(www.GdeFon.ru).jpg";
-          cont.lng = -71.276;
-          cont.lat = 42.4906;
-          cont.save((err, savedContent) => {
-            content = savedContent;
-            done();
-          })
-        }
-      );
+      Content.create({
+        userId: user._id,
+        contentType: "image",
+        data: "https://tinyurl.com/ycjh83v5",
+        lng: -71.276,
+        lat: 42.4906
+      })
+      .then((savedContent) => {
+        content = savedContent;
+        done();        
+      })
     });
 
     it("creates new like", done => {
-      var options = {
+      let options = {
         url: `${apiUrl}like`,
         method: "POST",
         headers: {
