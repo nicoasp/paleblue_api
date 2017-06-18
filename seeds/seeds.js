@@ -1,24 +1,22 @@
-
 module.exports = () => {
   // ----------------------------------------
   // Create Users
   // ----------------------------------------
-  console.log('Creating Users');
+  console.log("Creating Users");
   var users = [];
   for (let i = 0; i < 10; i++) {
     var user = new User({
-      email: `foobar${ i }@gmail.com`,
-      password: 'password',
+      email: `foobar${i}@gmail.com`,
+      password: "password",
       lastActive: new Date(Date.now() - 1000000)
     });
     users.push(user);
   }
 
-
   // ----------------------------------------
   // Content
   // ----------------------------------------
-  console.log('Creating Dots');
+  console.log("Creating Dots");
   var contents = [];
 
   contents.push(
@@ -46,7 +44,7 @@ module.exports = () => {
     new Content({
       userId: users[3]._id,
       contentType: "text",
-      data: "Hello I'm content",
+      data: "Hello I'm a piece of pretty long text content. I hope this is truncated because I really do have a lot to say and I'm going to keep typing until I get all my feelings out into the open. I'm incredibly verbose and believe that tl;drs are a crime against humanity. Here are some irrelevant points supporting some argument that is unrelated to my original train of thought. Hello I'm a piece of pretty long text content. I hope this is truncated because I really do have a lot to say and I'm going to keep typing until I get all my feelings out into the open. I'm incredibly verbose and believe that tl;drs are a crime against humanity. Here are some irrelevant points supporting some argument that is unrelated to my original train of thought. Hello I'm a piece of pretty long text content. I hope this is truncated because I really do have a lot to say and I'm going to keep typing until I get all my feelings out into the open. I'm incredibly verbose and believe that tl;drs are a crime against humanity. Here are some irrelevant points supporting some argument that is unrelated to my original train of thought. Hello I'm a piece of pretty long text content. I hope this is truncated because I really do have a lot to say and I'm going to keep typing until I get all my feelings out into the open. I'm incredibly verbose and believe that tl;drs are a crime against humanity. Here are some irrelevant points supporting some argument that is unrelated to my original train of thought. Hello I'm a piece of pretty long text content. I hope this is truncated because I really do have a lot to say and I'm going to keep typing until I get all my feelings out into the open. I'm incredibly verbose and believe that tl;drs are a crime against humanity. Here are some irrelevant points supporting some argument that is unrelated to my original train of thought. Hello I'm a piece of pretty long text content. I hope this is truncated because I really do have a lot to say and I'm going to keep typing until I get all my feelings out into the open. I'm incredibly verbose and believe that tl;drs are a crime against humanity. Here are some irrelevant points supporting some argument that is unrelated to my original train of thought. Hello I'm a piece of pretty long text content. I hope this is truncated because I really do have a lot to say and I'm going to keep typing until I get all my feelings out into the open. I'm incredibly verbose and believe that tl;drs are a crime against humanity. Here are some irrelevant points supporting some argument that is unrelated to my original train of thought. Hello I'm a piece of pretty long text content. I hope this is truncated because I really do have a lot to say and I'm going to keep typing until I get all my feelings out into the open. I'm incredibly verbose and believe that tl;drs are a crime against humanity. Here are some irrelevant points supporting some argument that is unrelated to my original train of thought. Hello I'm a piece of pretty long text content. I hope this is truncated because I really do have a lot to say and I'm going to keep typing until I get all my feelings out into the open. I'm incredibly verbose and believe that tl;drs are a crime against humanity. Here are some irrelevant points supporting some argument that is unrelated to my original train of thought. Hello I'm a piece of pretty long text content. I hope this is truncated because I really do have a lot to say and I'm going to keep typing until I get all my feelings out into the open. I'm incredibly verbose and believe that tl;drs are a crime against humanity. Here are some irrelevant points supporting some argument that is unrelated to my original train of thought. Hello I'm a piece of pretty long text content. I hope this is truncated because I really do have a lot to say and I'm going to keep typing until I get all my feelings out into the open. I'm incredibly verbose and believe that tl;drs are a crime against humanity. Here are some irrelevant points supporting some argument that is unrelated to my original train of thought. Hello I'm a piece of pretty long text content. I hope this is truncated because I really do have a lot to say and I'm going to keep typing until I get all my feelings out into the open. I'm incredibly verbose and believe that tl;drs are a crime against humanity. Here are some irrelevant points supporting some argument that is unrelated to my original train of thought. Hello I'm a piece of pretty long text content. I hope this is truncated because I really do have a lot to say and I'm going to keep typing until I get all my feelings out into the open. I'm incredibly verbose and believe that tl;drs are a crime against humanity. Here are some irrelevant points supporting some argument that is unrelated to my original train of thought. Hello I'm a piece of pretty long text content. I hope this is truncated because I really do have a lot to say and I'm going to keep typing until I get all my feelings out into the open. I'm incredibly verbose and believe that tl;drs are a crime against humanity. Here are some irrelevant points supporting some argument that is unrelated to my original train of thought. Hello I'm a piece of pretty long text content. I hope this is truncated because I really do have a lot to say and I'm going to keep typing until I get all my feelings out into the open. I'm incredibly verbose and believe that tl;drs are a crime against humanity. Here are some irrelevant points supporting some argument that is unrelated to my original train of thought. Hello I'm a piece of pretty long text content. I hope this is truncated because I really do have a lot to say and I'm going to keep typing until I get all my feelings out into the open. I'm incredibly verbose and believe that tl;drs are a crime against humanity. Here are some irrelevant points supporting some argument that is unrelated to my original train of thought. Hello I'm a piece of pretty long text content. I hope this is truncated because I really do have a lot to say and I'm going to keep typing until I get all my feelings out into the open. I'm incredibly verbose and believe that tl;drs are a crime against humanity. Here are some irrelevant points supporting some argument that is unrelated to my original train of thought. Hello I'm a piece of pretty long text content. I hope this is truncated because I really do have a lot to say and I'm going to keep typing until I get all my feelings out into the open. I'm incredibly verbose and believe that tl;drs are a crime against humanity. Here are some irrelevant points supporting some argument that is unrelated to my original train of thought. Hello I'm a piece of pretty long text content. I hope this is truncated because I really do have a lot to say and I'm going to keep typing until I get all my feelings out into the open. I'm incredibly verbose and believe that tl;drs are a crime against humanity. Here are some irrelevant points supporting some argument that is unrelated to my original train of thought. Hello I'm a piece of pretty long text content. I hope this is truncated because I really do have a lot to say and I'm going to keep typing until I get all my feelings out into the open. I'm incredibly verbose and believe that tl;drs are a crime against humanity. Here are some irrelevant points supporting some argument that is unrelated to my original train of thought. Hello I'm a piece of pretty long text content. I hope this is truncated because I really do have a lot to say and I'm going to keep typing until I get all my feelings out into the open. I'm incredibly verbose and believe that tl;drs are a crime against humanity. Here are some irrelevant points supporting some argument that is unrelated to my original train of thought. Hello I'm a piece of pretty long text content. I hope this is truncated because I really do have a lot to say and I'm going to keep typing until I get all my feelings out into the open. I'm incredibly verbose and believe that tl;drs are a crime against humanity. Here are some irrelevant points supporting some argument that is unrelated to my original train of thought. Hello I'm a piece of pretty long text content. I hope this is truncated because I really do have a lot to say and I'm going to keep typing until I get all my feelings out into the open. I'm incredibly verbose and believe that tl;drs are a crime against humanity. Here are some irrelevant points supporting some argument that is unrelated to my original train of thought. Hello I'm a piece of pretty long text content. I hope this is truncated because I really do have a lot to say and I'm going to keep typing until I get all my feelings out into the open. I'm incredibly verbose and believe that tl;drs are a crime against humanity. Here are some irrelevant points supporting some argument that is unrelated to my original train of thought. Hello I'm a piece of pretty long text content. I hope this is truncated because I really do have a lot to say and I'm going to keep typing until I get all my feelings out into the open. I'm incredibly verbose and believe that tl;drs are a crime against humanity. Here are some irrelevant points supporting some argument that is unrelated to my original train of thought. Hello I'm a piece of pretty long text content. I hope this is truncated because I really do have a lot to say and I'm going to keep typing until I get all my feelings out into the open. I'm incredibly verbose and believe that tl;drs are a crime against humanity. Here are some irrelevant points supporting some argument that is unrelated to my original train of thought. Hello I'm a piece of pretty long text content. I hope this is truncated because I really do have a lot to say and I'm going to keep typing until I get all my feelings out into the open. I'm incredibly verbose and believe that tl;drs are a crime against humanity. Here are some irrelevant points supporting some argument that is unrelated to my original train of thought. Hello I'm a piece of pretty long text content. I hope this is truncated because I really do have a lot to say and I'm going to keep typing until I get all my feelings out into the open. I'm incredibly verbose and believe that tl;drs are a crime against humanity. Here are some irrelevant points supporting some argument that is unrelated to my original train of thought. Hello I'm a piece of pretty long text content. I hope this is truncated because I really do have a lot to say and I'm going to keep typing until I get all my feelings out into the open. I'm incredibly verbose and believe that tl;drs are a crime against humanity. Here are some irrelevant points supporting some argument that is unrelated to my original train of thought. Hello I'm a piece of pretty long text content. I hope this is truncated because I really do have a lot to say and I'm going to keep typing until I get all my feelings out into the open. I'm incredibly verbose and believe that tl;drs are a crime against humanity. Here are some irrelevant points supporting some argument that is unrelated to my original train of thought. Hello I'm a piece of pretty long text content. I hope this is truncated because I really do have a lot to say and I'm going to keep typing until I get all my feelings out into the open. I'm incredibly verbose and believe that tl;drs are a crime against humanity. Here are some irrelevant points supporting some argument that is unrelated to my original train of thought. Hello I'm a piece of pretty long text content. I hope this is truncated because I really do have a lot to say and I'm going to keep typing until I get all my feelings out into the open. I'm incredibly verbose and believe that tl;drs are a crime against humanity. Here are some irrelevant points supporting some argument that is unrelated to my original train of thought. ",
       lng: -70.9410,
       lat: 42.2181
     }),
@@ -69,7 +67,7 @@ module.exports = () => {
   // ----------------------------------------
   // Like
   // ----------------------------------------
-  console.log('Creating Likes');
+  console.log("Creating Likes");
   var likes = [];
 
   likes.push(
@@ -93,18 +91,13 @@ module.exports = () => {
     })
   );
 
-
   // ----------------------------------------
   // Finish
   // ----------------------------------------
-  console.log('Saving...');
+  console.log("Saving...");
   var promises = [];
-  [
-    users,
-    contents,
-    likes
-  ].forEach((collection) => {
-    collection.forEach((model) => {
+  [users, contents, likes].forEach(collection => {
+    collection.forEach(model => {
       promises.push(model.save());
     });
   });
