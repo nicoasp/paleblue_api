@@ -103,6 +103,18 @@ io.on('connection', (socket) => {
   socket.on('created like', (like) => {
     socket.broadcast.emit('new like', like);
   })
+
+  socket.on('closing browser', (closeInfo) => {
+    User.findById(closeInfo.userId)
+    .then(user => {
+      if (user) {
+        user.lastActive = closeInfo.time;
+        user.save((err, updatedUser) => {
+          console.log("lastActive updated")
+        })        
+      }
+    })
+  })
 });
 
 
