@@ -97,11 +97,11 @@ io.on('connection', (socket) => {
   });
 
   socket.on('created content', (content) => {
-    io.broadcast.emit('new content', content);
+    socket.broadcast.emit('new content', content);
   })
 
   socket.on('created like', (like) => {
-    io.broadcast.emit('new like', like);
+    socket.broadcast.emit('new like', like);
   })
 });
 
