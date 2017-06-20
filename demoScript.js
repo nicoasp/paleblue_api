@@ -6,19 +6,9 @@ const faker = require('faker');
 
 
 // All the content and likes can be done by one single fake user, since we don't make any conditions on like ids or locations for user contents.
-let user;
-User.create({
-  email: "foobar@gmail.com",
-  password: "password",
-  demoId: demoUserId
-})
-.then(savedUser => {
-  user = savedUser;
-})
 
 
-
-const createAndSendContent = (socket, demoUserId, delay, postedContent) => {
+const createAndSendContent = (socket, demoUserId, otherUserId, delay, postedContent) => {
 	return setTimeout(() => {
     let contentType, data;
     if (Math.floor(Math.random() * 2)) {
@@ -29,7 +19,7 @@ const createAndSendContent = (socket, demoUserId, delay, postedContent) => {
       data = faker.Lorem.paragraph();
     }
     Content.create({
-      userId: user._id,
+      userId: otherUserId,
       contentType,
       data,
       lng: faker.Address.longitude(),
@@ -37,24 +27,24 @@ const createAndSendContent = (socket, demoUserId, delay, postedContent) => {
       demoId: demoUserId
     })
     .then((savedContent) => {
-      postedContent.push(content);
-      socket.emit("new content", content);           
+      postedContent.push(savedContent);
+      socket.emit("new content", savedContent);           
     })    
 	}, delay)
 }
 
-const sendLike = (socket, demoUserId, delay, postedContent) => {
+const createAndSendLike = (socket, demoUserId, otherUserId, delay, postedContent, sentLikes) => {
   return setTimeout(() => {
     if (postedContent.length) {
-      let { fromLng, fromLat} = coordinates[Math.floor(Math.random() * coordinates.length)]
       Like.create({
-        fromUserId: user._id,
-        contentId: postedContent[Math.floor(Math.random() * postedContent.length)]
-        fromLng,
-        fromLat,
+        fromUserId: otherUserId,
+        contentId: postedContent[Math.floor(Math.random() * postedContent.length)]._id,
+        fromLng: faker.Address.longitude(),
+        fromLat: faker.Address.latitude(),
         demoId: demoUserId
       })
       .then((savedLike) => {
+        sentLikes.push(savedLike);
         socket.emit("new like", savedLike);    
       })
     }    
@@ -62,8 +52,9 @@ const sendLike = (socket, demoUserId, delay, postedContent) => {
 }
 
 
-const mainScript = (socket, demoUserId, demoContentId, text) => {
+const mainScript = (socket, demoUserId, demoContentId) => {
 
+  let mainUser, mainContent;
   // Give the already created user it's own demoId
   User.findById(demoUserId)
   .then(demoUser => {
@@ -71,6 +62,7 @@ const mainScript = (socket, demoUserId, demoContentId, text) => {
       demoUser.demoId = demoUserId;
       demoUser.save((err, updatedUser) => {
         if (err) { console.log(err); }
+        mainUser = demoUser;
       })        
     }
   }) 
@@ -81,22 +73,48 @@ const mainScript = (socket, demoUserId, demoContentId, text) => {
       demoContent.demoId = demoUserId;
       demoContent.save((err, updatedContent) => {
         if (err) { console.log(err); }
+        mainContent = demoContent;
       })        
     }
   }) 
+  // Create a fake user to do all the content and likes
+  let otherUser;
+  User.create({
+    email: "foobar@gmail.com",
+    password: "password",
+    demoId: demoUserId
+  })
+  .then(savedUser => {
+    otherUser = savedUser;
+  })
 
+  // Create 30 random content pieces and 20 likes for that existing content
   let postedContent = [];
-  // For each created piece of content, publish it at a random time
-  while (contentArray.length) {
-    let content = contentArray.pop();
+  let sentLikes = [];
+  for (let i = 0; i < 30; i++) {
     let delay = Math.floor(Math.random() * 300 + 1) * 1000;
-    sendContent(socket, content, delay, postedContent);
-  }
+    createAndSendContent(socket, demoUserId, otherUser._id, delay, postedContent);
+  }  
   for (let i = 0; i < 20; i++) {
-
+    let delay = Math.floor(Math.random() * 300 + 20) * 1000;
+    createAndSendLike(socket, demoUserId, otherUser._Id, delay, postedContent, sentLikes);
   }
+
+  // After 5 minutes, delete all created entities
+  setTimeout(() => {
+    mainUser.remove();
+    mainContent.remove();
+    otherUser.remove();
+    postedContent.forEach((c) => {
+      c.remove();
+    })
+    sentLikes.forEach((l) => {
+      l.remove();
+    })
+  }, 301000)
 }
 
+module.exports = mainScript;
 
 
 
