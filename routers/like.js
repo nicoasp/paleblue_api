@@ -54,7 +54,6 @@ router.post('/', (req, res) => {
       console.log("hit error")
       next({ status: 400, error: "Submitted like is not valid" });
   	} else {
-      console.log("added successfully")
       Like.findOne({ _id: like._id })
         .populate({
             path: 'contentId', 
@@ -72,7 +71,6 @@ router.post('/', (req, res) => {
           }
         })
         .then((finalLike) => {
-          console.log(finalLike)
           res.json({
             error: null,
             like: finalLike
