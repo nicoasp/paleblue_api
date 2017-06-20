@@ -87,9 +87,9 @@ module.exports = app;
 ////
 // Websockets
 ////
-const io = require('socket.io')(server);  
+const io = require('socket.io')(server);
 
-io.on('connection', (socket) => {  
+io.on('connection', (socket) => {
   console.log('a user connected');
 
   socket.on('disconnect', () => {
@@ -104,8 +104,3 @@ io.on('connection', (socket) => {
     io.emit('new like', like);
   })
 });
-
-
-
-
-
