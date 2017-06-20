@@ -13,6 +13,7 @@ let LikeSchema = new Schema({
   },
   fromLng: {type: Number},
   fromLat: {type: Number},
+  demoId: { type: String, default: "" }
 }, {
   timestamps: true
 });
