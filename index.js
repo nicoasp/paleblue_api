@@ -101,7 +101,7 @@ io.on('connection', (socket) => {
   })
 
   socket.on('created like', (like) => {
-    socket.broadcast.emit('new like', like);
+    io.emit('new like', like);
   })
 
   socket.on('closing browser', (closeInfo) => {
