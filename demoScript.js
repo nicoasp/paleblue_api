@@ -127,10 +127,11 @@ const mainScript = (socket, demoUserId, demoContentId) => {
     otherUser.remove();
     postedContent.forEach((c) => {
       c.remove();
-    })
+    });
     sentLikes.forEach((l) => {
       l.remove();
-    })
+    });
+    socket.emit("finish demo");
   }, 301000)
 }
 
