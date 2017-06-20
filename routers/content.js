@@ -38,7 +38,7 @@ router.get('/sign-s3', (req, res, next) => {
 
 	const s3Params = {
 		Bucket: process.env.AWS_S3_BUCKET,
-		Key: fileName,
+		Key: hashedFileName,
 		ContentType: fileType,
 		ACL: 'public-read'
 	};
@@ -50,7 +50,7 @@ router.get('/sign-s3', (req, res, next) => {
 		} else {
 			res.json({
 				signedRequest: data,
-				url: `https://${process.env.AWS_S3_BUCKET}.s3.amazonaws.com/${fileName}`
+				url: `https://${process.env.AWS_S3_BUCKET}.s3.amazonaws.com/${hashedFileName}`
 			});
 		}
 	})
