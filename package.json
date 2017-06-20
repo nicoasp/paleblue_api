@@ -5,6 +5,7 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
+    "aws-sdk": "^2.73.0",
     "bcrypt-nodejs": "0.0.3",
     "bluebird": "^3.5.0",
     "body-parser": "^1.17.2",
@@ -14,6 +15,7 @@
     "jasmine": "^2.6.0",
     "jasmine-node": "^1.14.5",
     "jsonwebtoken": "^7.4.1",
+    "md5": "^2.2.1",
     "mongoose": "^4.10.5",
     "mongoose-unique-validator": "^1.0.5",
     "morgan": "^1.8.2",
