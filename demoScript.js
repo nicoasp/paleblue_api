@@ -43,13 +43,20 @@ const createAndSendLike = (socket, demoUserId, otherUserId, delay, postedContent
         fromLng: faker.Address.longitude(),
         fromLat: faker.Address.latitude(),
         demoId: demoUserId,
-        toLng: thisContent.lng,
-        toLat: thisContent.lat
       })
       .then((savedLike) => {
-        console.log(savedLike);
+        let finalLike = {
+          _id: savedLike._id,
+          contentId: thisContent._id,
+          fromUserId: savedLike.fromUserId,
+          fromLng: savedLike.fromLng,
+          fromLat: savedLike.fromLat,
+          toLng: thisContent.lng,
+          toLat: thisContent.lat,
+          createdAt: savedLike.createdAt
+        }
         sentLikes.push(savedLike);
-        socket.emit("new like", savedLike);    
+        socket.emit("new like", finalLike);    
       })
     }    
   }, delay)
