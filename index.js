@@ -121,4 +121,8 @@ io.on('connection', (socket) => {
     console.log(demoInfo);
     demoScript(socket, demoInfo.demoUserId, demoInfo.demoContentId);
   })
+
+  socket.on('end demo', () => {
+    console.log("demo ended manually");
+  })
 });

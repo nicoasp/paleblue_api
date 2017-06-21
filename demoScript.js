@@ -111,11 +111,11 @@ const mainScript = (socket, demoUserId, demoContentId) => {
   // Create 30 random content pieces and 20 likes for that existing content
   .then(() => {
     for (let i = 0; i < 30; i++) {
-      let delay = Math.floor(Math.random() * 300 + 1) * 1000;
+      let delay = Math.floor(Math.random() * 120 + 1) * 1000;
       createAndSendContent(socket, demoUserId, otherUser._id, delay, postedContent);
     }  
     for (let i = 0; i < 20; i++) {
-      let delay = Math.floor(Math.random() * 280 + 21) * 1000;
+      let delay = Math.floor(Math.random() * 100 + 21) * 1000;
       createAndSendLike(socket, demoUserId, otherUser._Id, delay, postedContent, sentLikes);
     }
   })
@@ -133,7 +133,7 @@ const mainScript = (socket, demoUserId, demoContentId) => {
       l.remove();
     });
     socket.emit("finish demo");
-  }, 301000)
+  }, 121000)
 }
 
 module.exports = mainScript;
