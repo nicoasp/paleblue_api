@@ -7,6 +7,7 @@ let UserSchema = new Schema({
   email: { type: String, isEmail: true, unique: true },
   passwordHash: { type: String },
   lastActive: { type: Date, default: Date.now },
+  demoId: { type: String, default: "" },
   expires: {
     type: Date,
     default: Date.now,

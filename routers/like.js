@@ -19,7 +19,12 @@ router.get('/', (req, res) => {
       })
     })
     .then((filteredList) => {
-      return filteredList.map((like) => {
+     return filteredList.filter((like) => {
+      return (!like.demoId || (req.user && req.user._id === like.demoId));
+     })
+    })
+    .then((noDemoList) => {
+      return noDemoList.map((like) => {
         return {
           _id: like._id,
           contentId: like.contentId._id,
@@ -54,7 +59,6 @@ router.post('/', (req, res) => {
       console.log("hit error")
       next({ status: 400, error: "Submitted like is not valid" });
   	} else {
-      console.log("added successfully")
       Like.findOne({ _id: like._id })
         .populate({
             path: 'contentId', 
@@ -72,7 +76,6 @@ router.post('/', (req, res) => {
           }
         })
         .then((finalLike) => {
-          console.log(finalLike)
           res.json({
             error: null,
             like: finalLike
