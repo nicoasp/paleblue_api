@@ -11,6 +11,7 @@ let ContentSchema = new Schema({
   lat: {type: Number},
   contentType: {type: String},
   data: {type: String},
+  demoId: { type: String, default: "" }
 }, {
   timestamps: true
 });
