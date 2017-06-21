@@ -9,12 +9,12 @@ const Like = models.Like;
 router.get('/', (req, res) => {
   Like.find({})
     .populate({
-        path: 'contentId', 
+        path: 'contentId',
         populate: { path: 'userId' }
     })
     .then((likeList) => {
       return likeList.filter((like) => {
-        return (like.contentId.userId.email == req.user.email 
+        return (like.contentId.userId.email == req.user.email
           && like.contentId.userId.lastActive < like.createdAt)
       })
     })
@@ -29,6 +29,7 @@ router.get('/', (req, res) => {
           _id: like._id,
           contentId: like.contentId._id,
           fromUserId: like.fromUserId,
+          toUserId: like.userId,
           fromLng: like.fromLng,
           fromLat: like.fromLat,
           toLng: like.contentId.lng,
@@ -61,7 +62,7 @@ router.post('/', (req, res) => {
   	} else {
       Like.findOne({ _id: like._id })
         .populate({
-            path: 'contentId', 
+            path: 'contentId',
         })
         .then((populatedLike) => {
           return {
