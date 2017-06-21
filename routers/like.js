@@ -29,7 +29,7 @@ router.get('/', (req, res) => {
           _id: like._id,
           contentId: like.contentId._id,
           fromUserId: like.fromUserId,
-          toUserId: like.userId,
+          toUserId: like.contentId.userId,
           fromLng: like.fromLng,
           fromLat: like.fromLat,
           toLng: like.contentId.lng,
@@ -65,10 +65,12 @@ router.post('/', (req, res) => {
             path: 'contentId',
         })
         .then((populatedLike) => {
+          console.log(populatedLike);
           return {
             _id: populatedLike._id,
             contentId: populatedLike.contentId._id,
             fromUserId: populatedLike.fromUserId,
+            toUserId: populatedLike.contentId.userId,
             fromLng: populatedLike.fromLng,
             fromLat: populatedLike.fromLat,
             toLng: populatedLike.contentId.lng,
