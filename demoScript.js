@@ -28,8 +28,8 @@ const createAndSendContent = (socket, demoUserId, otherUserId, delay, postedCont
     })
     .then((savedContent) => {
       postedContent.push(savedContent);
-      socket.emit("new content", savedContent);           
-    })    
+      socket.emit("new content", savedContent);
+    })
 	}, delay)
 }
 
@@ -49,6 +49,7 @@ const createAndSendLike = (socket, demoUserId, otherUserId, delay, postedContent
           _id: savedLike._id,
           contentId: thisContent._id,
           fromUserId: savedLike.fromUserId,
+					toUserId: thisContent.userId,
           fromLng: savedLike.fromLng,
           fromLat: savedLike.fromLat,
           toLng: thisContent.lng,
@@ -57,9 +58,9 @@ const createAndSendLike = (socket, demoUserId, otherUserId, delay, postedContent
           createdAt: savedLike.createdAt
         }
         sentLikes.push(savedLike);
-        socket.emit("new like", finalLike);    
+        socket.emit("new like", finalLike);
       })
-    }    
+    }
   }, delay)
 }
 
@@ -80,7 +81,7 @@ const cleanDb = () => {
   });
   sentLikes.forEach((l) => {
     l.remove();
-  });  
+  });
 }
 
 const stopScript = () => {
@@ -95,8 +96,8 @@ const stopScript = () => {
 const mainScript = (socket, demoUserId, demoContentId) => {
 
   socket.on('end demo', () => {
-    console.log("demo ended manually");    
-    stopScript();    
+    console.log("demo ended manually");
+    stopScript();
     socket.emit("finish demo");
   })
 
@@ -108,24 +109,24 @@ const mainScript = (socket, demoUserId, demoContentId) => {
       demoUser.save((err, updatedUser) => {
         if (err) { console.log(err); }
         mainUser = demoUser;
-      })        
+      })
     }
     return;
-  }) 
+  })
   // Give the content he created the demoId
   .then(() => {
     return Content.findById(demoContentId)
-  })  
+  })
   .then(demoContent => {
     if (demoContent) {
       demoContent.demoId = demoUserId;
       demoContent.save((err, updatedContent) => {
         if (err) { console.log(err); }
         mainContent = demoContent;
-      })        
+      })
     }
     return;
-  }) 
+  })
   // Create a fake user to do all the content and likes
   .then(() => {
     return User.create({
@@ -143,7 +144,7 @@ const mainScript = (socket, demoUserId, demoContentId) => {
     for (let i = 0; i < 30; i++) {
       let delay = Math.floor(Math.random() * 120 + 1) * 1000;
       timeouts.push(createAndSendContent(socket, demoUserId, otherUser._id, delay, postedContent));
-    }  
+    }
     for (let i = 0; i < 20; i++) {
       let delay = Math.floor(Math.random() * 100 + 21) * 1000;
       timeouts.push(createAndSendLike(socket, demoUserId, otherUser._Id, delay, postedContent, sentLikes));
@@ -155,13 +156,9 @@ const mainScript = (socket, demoUserId, demoContentId) => {
   setTimeout(() => {
     if (!demoStopped) {
       cleanDb();
-      socket.emit("finish demo");      
+      socket.emit("finish demo");
     }
   }, 125000)
 }
 
 module.exports = mainScript;
-
-
-
-
