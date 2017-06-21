@@ -53,6 +53,7 @@ const createAndSendLike = (socket, demoUserId, otherUserId, delay, postedContent
           fromLat: savedLike.fromLat,
           toLng: thisContent.lng,
           toLat: thisContent.lat,
+          demoId: savedLike.demoId,
           createdAt: savedLike.createdAt
         }
         sentLikes.push(savedLike);
@@ -114,7 +115,7 @@ const mainScript = (socket, demoUserId, demoContentId) => {
       createAndSendContent(socket, demoUserId, otherUser._id, delay, postedContent);
     }  
     for (let i = 0; i < 20; i++) {
-      let delay = Math.floor(Math.random() * 300 + 20) * 1000;
+      let delay = Math.floor(Math.random() * 280 + 21) * 1000;
       createAndSendLike(socket, demoUserId, otherUser._Id, delay, postedContent, sentLikes);
     }
   })
