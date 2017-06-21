@@ -10,15 +10,13 @@ describe("Create a instance of", () => {
     it("should save to the database", done => {
       const user = new User();
       let pass = "hhhhssss11";
-      let passHash = bcrypt.hashSync(pass);
       let passCheck;
       user.email = "foo@bar.com";
       user.password = pass;
       user.save((err, user) => {
         expect(err).toBeNull();
         User.find({}, (err, result) => {
-          // Not using the pass returned by find for the passCheck?
-          passCheck = bcrypt.compareSync(pass, passHash);
+          passCheck = bcrypt.compareSync(pass, result[0].passwordHash);
           expect(result.length).toBe(1);
           expect(result[0].email).toBe("foo@bar.com");
           expect(passCheck).toBe(true);
@@ -93,7 +91,7 @@ describe("Create a instance of", () => {
         content.save((err, savedContent) => {
           content = savedContent;
           done();
-        });        
+        });
       });
     });
 
@@ -111,7 +109,7 @@ describe("Create a instance of", () => {
           expect(result[0].fromLat).toBe(42.4906);
           done();
         });
-      })
+      });
     });
   });
 });

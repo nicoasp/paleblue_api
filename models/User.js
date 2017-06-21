@@ -7,7 +7,11 @@ let UserSchema = new Schema({
   email: { type: String, isEmail: true, unique: true },
   passwordHash: { type: String },
   lastActive: { type: Date, default: Date.now },
-  verified: { type: Boolean, default: false }
+  expires: {
+    type: Date,
+    default: Date.now,
+    expires: process.env.VERIFICATION_EXPIRE_LENGTH || "3d"
+  }
 });
 
 UserSchema.methods.validatePassword = function(password) {

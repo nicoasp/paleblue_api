@@ -1,27 +1,23 @@
 Your User model should have an active attribute that is false by default
-  on login, conditional will check for !active,
-   then check the created at date.
-   if its older than an amount,
-   delete the user,
-   else log them in
+  DONESVILLE
 
 When the user submits a valid signup form, create a new User (who's active will be false initially)
-  change model to default with false
+  Xadd expiry to newly created users.
 
 Create a random hash and store it in your database with a reference to the User ID
-  create a hash with the email and a email validation secret
-  create a uservalidation model that stores a user id and an the hash
+  Xcreate a hash with the email and a email validation secret
+  Xcreate a uservalidation model that stores a user id and an the hash
 
 Send an email to the supplied email address with the hash as part of a link pointing back to a route on your server
-  call to a nodemailer send
-  set body to message + a url + the hash linking to the server
+  Xcall to a nodemailer send
+  Xset body to message + a url + the hash linking to the server
 
 When a user clicks the link and hits your route, check for the hash passed in the URL
-  create a get route for the validation link sent
-  if !hash next(error)
+  Xcreate a get route for the validation link sent
+  Xif !hash next(error)
 
 If the hash exists in the database, get the related user and set their active property to true
-  query the userValidation collection by hash and get _id
-  make an update to user by the _id and set verified to true
+  Xquery the userValidation collection by hash and get _id
+  Xmake an update to user by the _id and set verified to true
 
 Delete the hash from the database, it is no longer needed
