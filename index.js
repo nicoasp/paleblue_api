@@ -87,7 +87,8 @@ module.exports = app;
 ////
 // Websockets
 ////
-const io = require('socket.io')(server);
+const demoScript = require('./demoScript');
+const io = require('socket.io')(server);  
 
 io.on('connection', (socket) => {
   console.log('a user connected');
@@ -114,5 +115,10 @@ io.on('connection', (socket) => {
         })        
       }
     })
+  })
+
+  socket.on('start demo', (demoInfo) => {
+    console.log(demoInfo);
+    demoScript(socket, demoInfo.demoUserId, demoInfo.demoContentId);
   })
 });
