@@ -63,12 +63,42 @@ const createAndSendLike = (socket, demoUserId, otherUserId, delay, postedContent
   }, delay)
 }
 
+let mainUser, mainContent, otherUser;
+let postedContent = [];
+let sentLikes = [];
+let timeouts = [];
+let demoStopped = false;
+
+
+
+const cleanDb = () => {
+  mainUser.remove();
+  mainContent.remove();
+  otherUser.remove();
+  postedContent.forEach((c) => {
+    c.remove();
+  });
+  sentLikes.forEach((l) => {
+    l.remove();
+  });  
+}
+
+const stopScript = () => {
+  timeouts.forEach((timeout) => {
+    clearTimeout(timeout);
+  })
+  cleanDb();
+  demoStopped = true;
+}
+
 
 const mainScript = (socket, demoUserId, demoContentId) => {
 
-  let mainUser, mainContent, otherUser;
-  let postedContent = [];
-  let sentLikes = [];
+  socket.on('end demo', () => {
+    console.log("demo ended manually");    
+    stopScript();    
+    socket.emit("finish demo");
+  })
 
   // Give the already created user it's own demoId
   User.findById(demoUserId)
@@ -112,28 +142,22 @@ const mainScript = (socket, demoUserId, demoContentId) => {
   .then(() => {
     for (let i = 0; i < 30; i++) {
       let delay = Math.floor(Math.random() * 120 + 1) * 1000;
-      createAndSendContent(socket, demoUserId, otherUser._id, delay, postedContent);
+      timeouts.push(createAndSendContent(socket, demoUserId, otherUser._id, delay, postedContent));
     }  
     for (let i = 0; i < 20; i++) {
       let delay = Math.floor(Math.random() * 100 + 21) * 1000;
-      createAndSendLike(socket, demoUserId, otherUser._Id, delay, postedContent, sentLikes);
+      timeouts.push(createAndSendLike(socket, demoUserId, otherUser._Id, delay, postedContent, sentLikes));
     }
   })
 
 
-  // After 5 minutes, delete all created entities
+  // After 2 minutes, delete all created entities
   setTimeout(() => {
-    mainUser.remove();
-    mainContent.remove();
-    otherUser.remove();
-    postedContent.forEach((c) => {
-      c.remove();
-    });
-    sentLikes.forEach((l) => {
-      l.remove();
-    });
-    socket.emit("finish demo");
-  }, 121000)
+    if (!demoStopped) {
+      cleanDb();
+      socket.emit("finish demo");      
+    }
+  }, 125000)
 }
 
 module.exports = mainScript;
